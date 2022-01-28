@@ -36,7 +36,7 @@ public class LeeAuthenticationController {
 	@Autowired
 	private LeeUserDetailsService userDetailsService;
 
-	@GetMapping("/authenticate")
+	@PostMapping("/authenticate")
 	public ResponseEntity<?> createAuthenticationToken(@RequestBody JwtRequest authenticationRequest) throws Exception {
 
 		authenticate(authenticationRequest.getUsername(), authenticationRequest.getPassword());
