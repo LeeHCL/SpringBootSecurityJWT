@@ -23,11 +23,12 @@ public class LeeUserDetailsService implements UserDetailsService {
 	private PasswordEncoder bcryptEncoder;
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-		if ("lee".equals(username)) {
-			return new User("lee", "$2a$12$12DNSKQHNmunh4XJfpXMu.ONlC5q9Qp7xH2kxWXIzPL/ch3tawQei", new ArrayList<>());
-		} else {
-			throw new UsernameNotFoundException("User not found with username: " + username);
+		DAOUser user = repo.findByUsername(username);
+		if (user == null) {
+			throw new UsernameNotFoundException("User not found with this username" + username);
 		}
+		return new org.springframework.security.core.userdetails.User(user.getUsername(), user.getPassword(),
+				new ArrayList<>());
 	}
 	
 	public DAOUser save(UserDTO user) {
